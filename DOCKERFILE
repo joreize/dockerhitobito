@@ -1,0 +1,7 @@
+FROM ubuntu:bionic
+
+# OS Prereq install
+RUN apt-get install sqlite3 libsqlite3-dev libgmp3-dev \
+    apt-get install mysql-client libmysqlclient-dev mysql-server \
+    apt-get install sphinxsearch memcached imagemagick transifex-client graphviz \
+    apt-get install git
