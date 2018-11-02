@@ -22,6 +22,7 @@ RUN apt-get update \
         zip \
         ruby-full \
         ruby-bundler \
+        ruby-dev \
         sqlite3 \
         libsqlite3-dev \ 
         libgmp3-dev \
@@ -33,7 +34,17 @@ RUN apt-get update \
         imagemagick \
         transifex-client \
         graphviz \
-        git \
+        git \ 
+        patch ruby-dev \
+        zlib1g-dev\
+        libxml2-dev \
+        libxml2 \
+        libxslt-dev \
+        pkg-config \
+        libz-dev \
+        gcc \
+        liblzma-dev \
+        tzdata \
  && update-locale LANG=en_US.UTF-8 LC_MESSAGES=POSIX \
  && locale-gen
 
@@ -46,12 +57,26 @@ RUN git clone https://github.com/hitobito/hitobito.git \
  && cp hitobito/Wagonfile.ci hitobito/Wagonfile \
  && cp hitobito/Gemfile.lock hitobito_generic/
 
+WORKDIR /hitobito/hitobito
+
+RUN gem update --system
+
+RUN gem install rake
+
+RUN gem install rubocop \
+ && gem install tzinfo \
+ && gem install tz-info-data
+
+RUN rm Gemfile.lock
+
+RUN bundle install
+
 RUN bundle \
  && rake db:create \
- && rake db:setup:all \
- && gem install foreman \
- && foreman start
+# && rake db:setup:all \
+# && gem install foreman \
+# && foreman start
 
-RUN rake \
- && rake wagon:test
+#RUN rake \
+# && rake wagon:test
 
