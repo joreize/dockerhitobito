@@ -65,14 +65,12 @@ RUN gem install rake
 
 RUN gem install rubocop \
  && gem install tzinfo \
- && gem install tz-info-data
+ && gem install tzinfo-data
 
 RUN rm Gemfile.lock
 
 RUN bundle install
 
-
-RUN bundle install
 RUN bundle \
  && rake db:create \
 # && rake db:setup:all \
