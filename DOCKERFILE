@@ -71,6 +71,8 @@ RUN rm Gemfile.lock
 
 RUN bundle install
 
+
+RUN bundle install
 RUN bundle \
  && rake db:create \
 # && rake db:setup:all \
